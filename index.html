@@ -10,6 +10,7 @@
     </head>
     <body>
     	<div id='startBtnSegment' class='ui segment'>
+	    	<h1 id='title' class='ui header'>Fast-Paced Social Media Management Game</h1>
 	    	<button id='startBtn' class="massive ui button">
 			    <i class="play icon"></i> Start
 			 </button>
@@ -21,93 +22,131 @@
 			</div>
 		</div>
 
-    	<div id='promptSegment' class="ui piled segment hidden">
-
-    		<div id='promptDimmer' class="ui dimmer">
-		    	<div class="ui text loader">Sit tight...</div>
+		<div id='contentSegment' class='ui blurring segment'>
+			<div id='loaderDimmer' class="ui dimmer fullscreen">
+		    	<div class="ui text loader massive">Sit tight...</div>
 		  	</div>
 
-    		<h1 id='promptHeader' class="ui header">A header</h1>
-    		<p id='promptContent' class='ui massive'></p>
-    		<div id='countdownBox'><div id='countdown' class='ui label massive hidden'><i class='clock icon'></i>5</div></div>
-		</div>
+			<div id='bombDimmer' class="ui dimmer fullscreen">
+		    	<div class="content">
+			      <h2 class="ui inverted icon header">
+			        <i class="bomb icon"></i>
+			        BOMB!
+			      </h2>
+			    </div>
+		  	</div>
 
-		<div id='instagramReactions' class='ui segment hidden reactionPane'>
-			<div class="ui button reactionBtn" data-reaction='View Story'>
-		    	<i class="eye icon"></i> View Story
+		  	<div id='bonusDimmer' class="ui dimmer fullscreen">
+		    	<div class="content">
+			      <h2 class="ui inverted icon header">
+			        <i class="star icon"></i>
+			        BONUS!
+			      </h2>
+			    </div>
 		  	</div>
-			<div class="ui button reactionBtn" data-reaction='Like'>
-		    	<i class="heart icon"></i> Like
-		  	</div>
-		  	<div class="ui button reactionBtn" data-reaction='Unfollow'>
-		    	<i class="user times icon"></i> Unfollow
-		  	</div>
-		  	<div class="ui button reactionBtn" data-reaction='Message'>
-		    	<i class="paper plane icon"></i> Message
-		  	</div>
-		  	<div class="ui button reactionBtn" data-reaction='Tag'>
-		    	<i class="tag icon"></i> Tag
-		  	</div>
-		  	<div class="ui button reactionBtn" data-reaction='Reply'>
-		    	<i class="reply icon"></i> Reply
-		  	</div>
-		  	<div class="ui button reactionBtn" data-reaction='Stalk'>
-		    	<i class="user secret icon"></i> Stalk
-		  	</div>
-		  	<div class="ui button reactionBtn" data-reaction='Allow Following'>
-		    	<i class="user plus icon"></i> Allow Following
-		  	</div>
-		  	<div class="ui button reactionBtn" data-reaction='Untag'>
-		    	<i class="unlink icon"></i> Untag
-		  	</div>
-		  	<div class="ui button reactionBtn" data-reaction='Block'>
-		    	<i class="ban icon"></i> Block
-		  	</div>
-		</div>
 
-		<div id='snapchatReactions' class='ui segment hidden reactionPane'>
-			<div class="ui button reactionBtn" data-reaction='View Story'>
-		    	<i class="eye icon"></i> View Story
+		  	<div id='correctDimmer' class="ui dimmer fullscreen">
+		    	<div class="content">
+			      <h2 class="ui inverted icon header">
+			        <i class="check icon"></i>
+			        Correct!
+			      </h2>
+			    </div>
 		  	</div>
-		  	<div class="ui button reactionBtn" data-reaction='Reply'>
-		    	<i class="reply icon"></i> Reply
-		  	</div>
-		  	<div class="ui button reactionBtn" data-reaction='Nothing'>
-		    	<i class="circle icon"></i> Nothing
-		  	</div>
-		  	<div class="ui button reactionBtn" data-reaction='Message'>
-		    	<i class="paper plane icon"></i> Message
-		  	</div>
-		  	<div class="ui button reactionBtn" data-reaction='Send a Snap'>
-		    	<i class="camera icon"></i> Send a Snap
-		  	</div>
-		</div>
 
-		<div id='facebookReactions' class='ui segment hidden reactionPane'>
-			<div class="ui button reactionBtn" data-reaction='View Story'>
-		    	<i class="eye icon"></i> View Story
+		  	<div id='incorrectDimmer' class="ui dimmer fullscreen">
+		    	<div class="content">
+			      <h2 class="ui inverted icon header">
+			        <i class="times icon"></i>
+			        Nope
+			      </h2>
+			    </div>
 		  	</div>
-			<div class="ui button reactionBtn" data-reaction='Like'>
-		    	<i class="heart icon"></i> Like
-		  	</div>
-		  	<div class="ui button reactionBtn" data-reaction='Reply'>
-		    	<i class="reply icon"></i> Reply
-		  	</div>
-		  	<div class="ui button reactionBtn" data-reaction='Stalk'>
-		    	<i class="user secret icon"></i> Stalk
-		  	</div>
-		  	<div class="ui button reactionBtn" data-reaction='Untag'>
-		    	<i class="unlink icon"></i> Untag
-		  	</div>
-		  	<div class="ui button reactionBtn" data-reaction='Hide from Timeline'>
-		    	<i class="trash alternate icon"></i> Hide from Timeline
-		  	</div>
-		</div>
 
-		<div id='resultSegment' class='ui segment hidden'>
-			<h1 class='ui header'>Congratulations</h1>
-			<p id='resultContent'></p>
+	    	<div id='promptSegment' class="ui piled segment hidden">
+
+	    		<h1 id='promptHeader' class="ui header">A header</h1>
+	    		<p id='promptContent' class='ui massive'></p>
+	    		<div id='countdownBox'><div id='countdown' class='ui label massive hidden'><i class='clock icon'></i>5</div></div>
 			</div>
+
+			<div id='instagramReactions' class='ui segment hidden reactionPane'>
+				<div class="ui button reactionBtn" data-reaction='View Story'>
+			    	<i class="eye icon"></i> View Story
+			  	</div>
+				<div class="ui button reactionBtn" data-reaction='Like'>
+			    	<i class="heart icon"></i> Like
+			  	</div>
+			  	<div class="ui button reactionBtn" data-reaction='Unfollow'>
+			    	<i class="user times icon"></i> Unfollow
+			  	</div>
+			  	<div class="ui button reactionBtn" data-reaction='Message'>
+			    	<i class="paper plane icon"></i> Message
+			  	</div>
+			  	<div class="ui button reactionBtn" data-reaction='Tag'>
+			    	<i class="tag icon"></i> Tag
+			  	</div>
+			  	<div class="ui button reactionBtn" data-reaction='Reply'>
+			    	<i class="reply icon"></i> Reply
+			  	</div>
+			  	<div class="ui button reactionBtn" data-reaction='Stalk'>
+			    	<i class="user secret icon"></i> Stalk
+			  	</div>
+			  	<div class="ui button reactionBtn" data-reaction='Allow Following'>
+			    	<i class="user plus icon"></i> Allow Following
+			  	</div>
+			  	<div class="ui button reactionBtn" data-reaction='Untag'>
+			    	<i class="unlink icon"></i> Untag
+			  	</div>
+			  	<div class="ui button reactionBtn" data-reaction='Block'>
+			    	<i class="ban icon"></i> Block
+			  	</div>
+			</div>
+
+			<div id='snapchatReactions' class='ui segment hidden reactionPane'>
+				<div class="ui button reactionBtn" data-reaction='View Story'>
+			    	<i class="eye icon"></i> View Story
+			  	</div>
+			  	<div class="ui button reactionBtn" data-reaction='Reply'>
+			    	<i class="reply icon"></i> Reply
+			  	</div>
+			  	<div class="ui button reactionBtn" data-reaction='Nothing'>
+			    	<i class="circle icon"></i> Nothing
+			  	</div>
+			  	<div class="ui button reactionBtn" data-reaction='Message'>
+			    	<i class="paper plane icon"></i> Message
+			  	</div>
+			  	<div class="ui button reactionBtn" data-reaction='Send a Snap'>
+			    	<i class="camera icon"></i> Send a Snap
+			  	</div>
+			</div>
+
+			<div id='facebookReactions' class='ui segment hidden reactionPane'>
+				<div class="ui button reactionBtn" data-reaction='View Story'>
+			    	<i class="eye icon"></i> View Story
+			  	</div>
+				<div class="ui button reactionBtn" data-reaction='Like'>
+			    	<i class="heart icon"></i> Like
+			  	</div>
+			  	<div class="ui button reactionBtn" data-reaction='Reply'>
+			    	<i class="reply icon"></i> Reply
+			  	</div>
+			  	<div class="ui button reactionBtn" data-reaction='Stalk'>
+			    	<i class="user secret icon"></i> Stalk
+			  	</div>
+			  	<div class="ui button reactionBtn" data-reaction='Untag'>
+			    	<i class="unlink icon"></i> Untag
+			  	</div>
+			  	<div class="ui button reactionBtn" data-reaction='Hide from Timeline'>
+			    	<i class="trash alternate icon"></i> Hide from Timeline
+			  	</div>
+			</div>
+
+			<div id='resultSegment' class='ui segment hidden'>
+				<h1 class='ui header'>Congratulations</h1>
+				<p id='resultContent'></p>
+			</div>
+		</div>
 </div>
 		</div>
     </body>

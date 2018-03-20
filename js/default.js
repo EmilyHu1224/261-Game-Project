@@ -117,7 +117,7 @@ $(document).ready(function(){
 		$('#followerCountSegment').removeClass('hidden');
 		shuffle(PROMPTS);
 		$('#promptSegment').removeClass('hidden');
-		prompt(0);
+		prompt('loaderDimmer');
 		//$('#promptSegment').addClass('hidden');
 	});
 
@@ -127,12 +127,13 @@ $(document).ready(function(){
 				followerCount += 5;
 				$('#followerCount').html('<i class="users icon"></i> ' + followerCount);
 				$('#followerCount').transition('jiggle');
-				//bonus
+				dimmerName = 'bonusDimmer';
 			}
 			else {
 				followerCount++;
 				$('#followerCount').html('<i class="users icon"></i> ' + followerCount);
 				$('#followerCount').transition('pulse');
+				dimmerName = 'correctDimmer';
 			}
 		}
 		else {
@@ -143,7 +144,7 @@ $(document).ready(function(){
 				followerCount = 0;
 				$('#followerCount').html('<i class="users icon"></i> ' + followerCount);
 				$('#followerCount').transition('flash');
-				//bomb
+				dimmerName = 'bombDimmer';
 			}
 			else {
 				if (followerCount > 0) {
@@ -151,26 +152,38 @@ $(document).ready(function(){
 				}
 				$('#followerCount').html('<i class="users icon"></i> ' + followerCount);
 				$('#followerCount').transition('shake');
+				dimmerName = 'incorrectDimmer';
 			}
 		}
 
-		stopCountdown();
+		stopCountdown(dimmerName);
 	});
 });
 
-function prompt() {
-	if (current_index < PROMPTS.length) {
-		//$('#promptDimmer').addClass('active');
-		$('#promptHeader').html(logo(PROMPTS[current_index].platform) + PROMPTS[current_index].platform);
-		$('#promptContent').html(PROMPTS[current_index].content);
-		$(reaction(PROMPTS[current_index].platform)).removeClass('hidden');
-		countdown(current_index);
+function prompt(dimmerName = null) {
+	if (dimmerName === null) {
+		dimmerName = 'loaderDimmer';
 	}
-	else {
-		$('#promptSegment').addClass('hidden');
-		$('#resultSegment').removeClass('hidden');
-		$('#resultContent').html('You have spent about 3 minutes and gained ' + followerCount + ' followers :D');
-	}
+
+	$('#'+dimmerName).addClass('active');
+	$('#promptHeader').html('');
+	$('#promptContent').html('');
+
+	setTimeout(function() {
+		$('#'+dimmerName).removeClass('active');
+
+		if (current_index < PROMPTS.length) {
+			$('#promptHeader').html(logo(PROMPTS[current_index].platform) + PROMPTS[current_index].platform);
+			$('#promptContent').html(PROMPTS[current_index].content);
+			$(reaction(PROMPTS[current_index].platform)).removeClass('hidden');
+			countdown(current_index);
+		}
+		else {
+			$('#promptSegment').addClass('hidden');
+			$('#resultSegment').removeClass('hidden');
+			$('#resultContent').html('You have spent about 3 minutes and gained ' + followerCount + ' followers :D');
+		}
+	}, 1000);	
 }
 
 function countdown() {
@@ -188,13 +201,13 @@ function countdown() {
 	}, 1000);
 }
 
-function stopCountdown() {
+function stopCountdown(dimmerName = null) {
 	$('#countdown').addClass('hidden');
 	$('.reactionPane').addClass('hidden');
 	clearInterval(interval);
 	current_index++;
 	seconds_left = TIME_LIMIT;
-	prompt(current_index);
+	prompt(dimmerName);
 }
 
 function logo(platform) {

@@ -3,8 +3,16 @@
 	text-align: center;
 }
 
-#startBtn {
+#title {
 	margin-top: 20%;
+}
+
+#startBtn {
+	margin-top: 1%;
+}
+
+#contentSegment {
+	height: 100%;
 }
 
 #promptSegment {
