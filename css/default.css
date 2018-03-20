@@ -1,0 +1,51 @@
+#startBtnSegment {
+	height: 100%;
+	text-align: center;
+}
+
+#startBtn {
+	margin-top: 20%;
+}
+
+#promptSegment {
+	margin-top: 10%;
+	margin-left: 10%;
+	margin-right: 10%;
+	font-size: xx-large;
+}
+
+#countdownBox {
+	text-align: right;
+}
+
+.hidden {
+	display: none;
+}
+
+#instagramReactions {
+	margin-left: 5%;
+	margin-right: 5%;
+	font-size: large;
+	text-align: center;
+}
+
+#snapchatReactions {
+	margin-left: 5%;
+	margin-right: 5%;
+	font-size: large;
+	text-align: center;
+}
+
+#facebookReactions {
+	margin-left: 5%;
+	margin-right: 5%;
+	font-size: large;
+	text-align: center;
+}
+
+#resultSegment {
+	font-size: large;
+	margin-top: 5%;
+	margin-left: 10%;
+	margin-right: 10%;
+}
