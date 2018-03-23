@@ -1,3 +1,33 @@
+.instructionNav {
+	color: #504a4a85;
+	position: absolute;
+	font-size: xx-large;
+	top: 44%;
+	cursor: pointer;
+	transition: color 1s;
+	-webkit-transition: color: 1s;
+}
+
+.instructionNav:hover {
+	color: #504a4a;
+	transition: color 1s;
+	-webkit-transition: color: 1s;
+}
+
+#instructionNav_prev {
+	left: 3%;
+}
+
+#instructionNav_next {
+	right: 3%;
+}
+
+#instructions .close.icon {
+	top: 0;
+	right: 0;
+	color: black;
+}
+
 #startBtnSegment {
 	height: 100%;
 	text-align: center;

@@ -111,6 +111,11 @@ var interval;
 var followerCount = 0;
 var mistakes = [];
 
+var instruction_img_dir_prefix = 'img/instructions/intro-';
+var instruction_img_dir_suffix = '.jpg';
+var instruction_img_index = 1;
+var instruction_img_last_index = 7;
+
 $(document).ready(function(){
 	$('#startBtn').on('click', function() {
 		$('#startBtnSegment').addClass('hidden');
@@ -119,6 +124,65 @@ $(document).ready(function(){
 		$('#promptSegment').removeClass('hidden');
 		prompt('loaderDimmer');
 		//$('#promptSegment').addClass('hidden');
+	});
+
+	/*
+	$('#helpBtn').popup({
+		content: ''
+	});
+*/
+
+	$('#helpBtn').on('click', function() {
+		$('#instructions').modal({
+			blurring: true,
+			onHidden: function() {
+				$('#helpBtn').popup('change content', 'hello');
+			}
+		}).modal('show');
+		$('#instructions').modal()
+		$('#instructionNav_prev').transition('fade');
+		$('#instructionNav_next').on('click', function() {
+			if (instruction_img_index < instruction_img_last_index) {
+				instruction_img_index++;
+				
+				$('#instruction_img').attr('src', instruction_img_dir_prefix + instruction_img_index + instruction_img_dir_suffix);
+
+				if (instruction_img_index === 2) {
+					$('#instructionNav_prev').transition('fade');
+				}
+
+				if (instruction_img_index === instruction_img_last_index) {
+					$('#instructionNav_next').transition('fade');
+				}
+			}
+		});
+
+		$('#instructionNav_prev').on('click', function() {
+			if (instruction_img_index > 1) {
+				instruction_img_index--;
+
+				$('#instruction_img').attr('src', instruction_img_dir_prefix + instruction_img_index + instruction_img_dir_suffix);
+				/*
+				$('#instruction_img').transition({
+					animation : 'fade',
+				    duration  : 100
+				  })
+				.transition({
+					animation : 'fade',
+				    duration  : 100
+				});
+				*/
+
+				if (instruction_img_index === 1) {
+					$('#instructionNav_prev').transition('fade');
+				}
+
+				if (instruction_img_index === instruction_img_last_index - 1) {
+					$('#instructionNav_next').transition('fade');
+				} 
+			}
+		});
+
 	});
 
 	$('.reactionBtn').on('click', function() {
