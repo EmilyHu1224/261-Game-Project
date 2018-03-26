@@ -116,7 +116,27 @@ var instruction_img_dir_suffix = '.jpg';
 var instruction_img_index = 1;
 var instruction_img_last_index = 7;
 
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+        this.sound.play();
+    }
+    this.stop = function(){
+        this.sound.pause();
+    }
+}
+
 $(document).ready(function(){
+	var correct_sound = new sound('sound/correct.flac');
+	var incorrect_sound = new sound('sound/incorrect.mp3');
+	var bonus_sound = new sound('sound/bonus.mp3');
+	var bomb_sound = new sound('sound/bomb.wav');
+
 	$('#startBtn').on('click', function() {
 		$('#startBtnSegment').addClass('hidden');
 		$('#followerCountSegment').removeClass('hidden');
@@ -189,6 +209,8 @@ $(document).ready(function(){
 		if (!reacted) {
 			var THIS = this;
 			reacted = true;
+			var iconName = null;
+			var sound = null;
 
 			if (PROMPTS[current_index].reactions.includes($(this).data('reaction'))) {
 				if (PROMPTS[current_index].bonus === true) {
@@ -196,12 +218,14 @@ $(document).ready(function(){
 					$('#followerCount').html('<i class="users icon"></i> ' + followerCount);
 					$('#followerCount').transition('jiggle');
 					iconName = 'star';
+					sound = bonus_sound;
 				}
 				else {
 					followerCount++;
 					$('#followerCount').html('<i class="users icon"></i> ' + followerCount);
 					$('#followerCount').transition('pulse');
 					iconName = 'check';
+					sound = correct_sound;
 				}
 			}
 			else {
@@ -210,6 +234,7 @@ $(document).ready(function(){
 					$('#followerCount').html('<i class="users icon"></i> ' + followerCount);
 					$('#followerCount').transition('flash');
 					iconName = 'bomb';
+					sound = bomb_sound;
 				}
 				else {
 					if (followerCount > 0) {
@@ -218,6 +243,7 @@ $(document).ready(function(){
 					$('#followerCount').html('<i class="users icon"></i> ' + followerCount);
 					$('#followerCount').transition('shake');
 					iconName = 'times';
+					sound = incorrect_sound;
 				}
 			}
 
@@ -233,6 +259,8 @@ $(document).ready(function(){
 				position: 'top right',
 				offset: 2
 			}).popup('show');
+
+			sound.play();
 
 			setTimeout(function() {
 				$(THIS).popup('destroy');
