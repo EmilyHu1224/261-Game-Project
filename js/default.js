@@ -104,12 +104,12 @@ PROMPTS = 	[
 				}
 			];
 
-TIME_LIMIT = 5;
+var TIME_LIMIT = 5;
 var current_index = 0;
 var seconds_left = TIME_LIMIT;
 var interval;
 var followerCount = 0;
-var mistakes = [];
+var reacted = false;
 
 var instruction_img_dir_prefix = 'img/instructions/intro-';
 var instruction_img_dir_suffix = '.jpg';
@@ -122,7 +122,7 @@ $(document).ready(function(){
 		$('#followerCountSegment').removeClass('hidden');
 		shuffle(PROMPTS);
 		$('#promptSegment').removeClass('hidden');
-		prompt('loaderDimmer');
+		prompt();
 		//$('#promptSegment').addClass('hidden');
 	});
 
@@ -136,7 +136,7 @@ $(document).ready(function(){
 		$('#instructions').modal({
 			blurring: true,
 			onHidden: function() {
-				$('#helpBtn').popup('change content', 'hello');
+				$('#helpBtn').popup('fchange content', 'hello');
 			}
 		}).modal('show');
 		$('#instructions').modal()
@@ -186,74 +186,83 @@ $(document).ready(function(){
 	});
 
 	$('.reactionBtn').on('click', function() {
-		if (PROMPTS[current_index].reactions.includes($(this).data('reaction'))) {
-			if (PROMPTS[current_index].bonus === true) {
-				followerCount += 5;
-				$('#followerCount').html('<i class="users icon"></i> ' + followerCount);
-				$('#followerCount').transition('jiggle');
-				dimmerName = 'bonusDimmer';
-			}
-			else {
-				followerCount++;
-				$('#followerCount').html('<i class="users icon"></i> ' + followerCount);
-				$('#followerCount').transition('pulse');
-				dimmerName = 'correctDimmer';
-			}
-		}
-		else {
-			console.log('prompt: ' + PROMPTS[current_index].content);
-			console.log('tapped reaction: ' + $(this).data('reaction'));
-			console.log('expected reaction: ' + PROMPTS[current_index].reactions);
-			if (PROMPTS[current_index].bomb === true) {
-				followerCount = 0;
-				$('#followerCount').html('<i class="users icon"></i> ' + followerCount);
-				$('#followerCount').transition('flash');
-				dimmerName = 'bombDimmer';
-			}
-			else {
-				if (followerCount > 0) {
-					followerCount--;
-				}
-				$('#followerCount').html('<i class="users icon"></i> ' + followerCount);
-				$('#followerCount').transition('shake');
-				dimmerName = 'incorrectDimmer';
-			}
-		}
+		if (!reacted) {
+			var THIS = this;
+			reacted = true;
 
-		stopCountdown(dimmerName);
+			if (PROMPTS[current_index].reactions.includes($(this).data('reaction'))) {
+				if (PROMPTS[current_index].bonus === true) {
+					followerCount += 5;
+					$('#followerCount').html('<i class="users icon"></i> ' + followerCount);
+					$('#followerCount').transition('jiggle');
+					iconName = 'star';
+				}
+				else {
+					followerCount++;
+					$('#followerCount').html('<i class="users icon"></i> ' + followerCount);
+					$('#followerCount').transition('pulse');
+					iconName = 'check';
+				}
+			}
+			else {
+				if (PROMPTS[current_index].bomb === true) {
+					followerCount = 0;
+					$('#followerCount').html('<i class="users icon"></i> ' + followerCount);
+					$('#followerCount').transition('flash');
+					iconName = 'bomb';
+				}
+				else {
+					if (followerCount > 0) {
+						followerCount--;
+					}
+					$('#followerCount').html('<i class="users icon"></i> ' + followerCount);
+					$('#followerCount').transition('shake');
+					iconName = 'times';
+				}
+			}
+
+			stopCountdown();
+			
+			$('.reactionBtn').not('.visible').addClass('disabled');
+			$(THIS).removeClass('disabled');
+
+			$(THIS).popup({
+				html: '<i class="' + iconName + ' icon"></i>',
+				variation: 'mini inverted',
+				on: 'manual',
+				position: 'top right',
+				offset: 2
+			}).popup('show');
+
+			setTimeout(function() {
+				$(THIS).popup('destroy');
+				$('.reactionBtn').removeClass('disabled');
+				prompt();
+			}, 1500);
+		}
 	});
 });
 
-function prompt(dimmerName = null) {
-	if (dimmerName === null) {
-		dimmerName = 'loaderDimmer';
+function prompt() {
+	$('.reactionPane').addClass('hidden');
+
+	if (current_index < PROMPTS.length) {
+		$('#promptHeader').html(logo(PROMPTS[current_index].platform) + PROMPTS[current_index].platform);
+		$('#promptContent').html(PROMPTS[current_index].content);
+		$(reaction(PROMPTS[current_index].platform)).removeClass('hidden');
+		reacted = false;
+		countdown(current_index);
 	}
-
-	$('#'+dimmerName).addClass('active');
-	$('#promptHeader').html('');
-	$('#promptContent').html('');
-
-	setTimeout(function() {
-		$('#'+dimmerName).removeClass('active');
-
-		if (current_index < PROMPTS.length) {
-			$('#promptHeader').html(logo(PROMPTS[current_index].platform) + PROMPTS[current_index].platform);
-			$('#promptContent').html(PROMPTS[current_index].content);
-			$(reaction(PROMPTS[current_index].platform)).removeClass('hidden');
-			countdown(current_index);
-		}
-		else {
-			$('#promptSegment').addClass('hidden');
-			$('#resultSegment').removeClass('hidden');
-			$('#resultContent').html('You have spent about 3 minutes and gained ' + followerCount + ' followers :D');
-		}
-	}, 1000);	
+	else {
+		$('#promptSegment').addClass('hidden');
+		$('#resultSegment').removeClass('hidden');
+		$('#resultContent').html('You have spent about 3 minutes and gained ' + followerCount + ' followers :D');	
+	}
 }
 
 function countdown() {
 	$('#countdown').html("<i class='clock icon'></i>" + seconds_left);
 	$('#countdown').removeClass('hidden');
-	//$('#promptDimmer').removeClass('active');
 	
 	interval = setInterval(function() {
 		$('#countdown').html("<i class='clock icon'></i>" + seconds_left);	
@@ -265,13 +274,11 @@ function countdown() {
 	}, 1000);
 }
 
-function stopCountdown(dimmerName = null) {
+function stopCountdown() {
 	$('#countdown').addClass('hidden');
-	$('.reactionPane').addClass('hidden');
 	clearInterval(interval);
 	current_index++;
 	seconds_left = TIME_LIMIT;
-	prompt(dimmerName);
 }
 
 function logo(platform) {
