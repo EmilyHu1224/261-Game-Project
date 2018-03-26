@@ -212,7 +212,10 @@ $(document).ready(function(){
 			var iconName = null;
 			var sound = null;
 
-			if (PROMPTS[current_index].reactions.includes($(this).data('reaction'))) {
+			var current_prompt = PROMPTS[current_index];
+			var reaction = $(this).data('reaction');
+
+			if (current_prompt.reactions.includes(reaction)) {
 				if (PROMPTS[current_index].bonus === true) {
 					followerCount += 5;
 					$('#followerCount').html('<i class="users icon"></i> ' + followerCount);
@@ -245,6 +248,8 @@ $(document).ready(function(){
 					iconName = 'times';
 					sound = incorrect_sound;
 				}
+
+				appendToDashboard(current_prompt, reaction);
 			}
 
 			stopCountdown();
@@ -284,7 +289,11 @@ function prompt() {
 	else {
 		$('#promptSegment').addClass('hidden');
 		$('#resultSegment').removeClass('hidden');
-		$('#resultContent').html('You have spent about 3 minutes and gained ' + followerCount + ' followers :D');	
+		$('#resultContent').html('You spent 3 minutes and gained ' + followerCount + ' followers :D');	
+		if (dashboardCount > 0) {
+			$('#dashboardIntro').removeClass('hidden');
+			$('#dashboard').html(dashboardContent);
+		}
 	}
 }
 
@@ -298,6 +307,7 @@ function countdown() {
 
 		if (seconds_left < 0) {
 			stopCountdown();
+			prompt();
 		}
 	}, 1000);
 }
@@ -310,19 +320,21 @@ function stopCountdown() {
 }
 
 function logo(platform) {
+	return '<i class="' + platformIconName(platform) + ' icon"></i>';
+}
+
+function platformIconName(platform) {
 	if (platform === 'Facebook') {
-		name = 'blue facebook square';
+		return 'blue facebook square';
 	}
 
 	if (platform === 'Snapchat') {
-		name = 'yellow snapchat square';
+		return 'yellow snapchat square';
 	}
 
 	if (platform === 'Instagram') {
-		name = 'pink instagram';
+		return 'pink instagram';
 	}
-
-	return '<i class="' + name + ' icon"></i>';
 }
 
 function reaction(platform) {
@@ -349,4 +361,26 @@ function shuffle(a) {
         a[i] = a[j];
         a[j] = x;
     }
+}
+
+var dashboardCount = 0;
+var dashboardContent = '';
+function appendToDashboard(prompt, reaction) {
+	dashboardCount++;
+
+	dashboardContent += '<div class="item">'
+						+ '<i class="large blue '
+						+ platformIconName(prompt.platform)
+						+ ' middle aligned icon"></i>'
+					    + '<div class="content">'
+					    + '<h2 class="header">'
+					    + prompt.content
+					    + '</h2>'
+					    + '<div class="description">'
+					    + 'Your reaction: '
+					    + reaction
+					    + '<br />'
+					    + 'Appropriate reaction(s): '
+					    + prompt.reactions.join(', ')
+					    + '</div></div></div>';
 }
