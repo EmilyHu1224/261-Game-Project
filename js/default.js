@@ -223,7 +223,7 @@ $(document).ready(function(){
 
 			stopCountdown();
 			
-			$('.reactionBtn').not('.visible').addClass('disabled');
+			$('.reactionBtn').addClass('disabled');
 			$(THIS).removeClass('disabled');
 
 			$(THIS).popup({
