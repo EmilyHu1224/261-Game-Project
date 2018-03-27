@@ -114,7 +114,7 @@ var reacted = false;
 var instruction_img_dir_prefix = 'img/instructions/intro-';
 var instruction_img_dir_suffix = '.jpg';
 var instruction_img_index = 1;
-var instruction_img_last_index = 7;
+var instruction_img_last_index = 8;
 
 function sound(src) {
     this.sound = document.createElement("audio");
