@@ -163,9 +163,9 @@ $(document).ready(function(){
 		$('#instructionNav_prev').transition('fade');
 		$('#instructionNav_next').on('click', function() {
 			if (instruction_img_index < instruction_img_last_index) {
+				$('#instruction_img_'+instruction_img_index).addClass('hidden');
 				instruction_img_index++;
-				
-				$('#instruction_img').attr('src', instruction_img_dir_prefix + instruction_img_index + instruction_img_dir_suffix);
+				$('#instruction_img_'+instruction_img_index).removeClass('hidden');
 
 				if (instruction_img_index === 2) {
 					$('#instructionNav_prev').transition('fade');
@@ -179,9 +179,11 @@ $(document).ready(function(){
 
 		$('#instructionNav_prev').on('click', function() {
 			if (instruction_img_index > 1) {
+				
+				$('#instruction_img_'+instruction_img_index).addClass('hidden');
 				instruction_img_index--;
-
-				$('#instruction_img').attr('src', instruction_img_dir_prefix + instruction_img_index + instruction_img_dir_suffix);
+				$('#instruction_img_'+instruction_img_index).removeClass('hidden');
+				
 				/*
 				$('#instruction_img').transition({
 					animation : 'fade',
