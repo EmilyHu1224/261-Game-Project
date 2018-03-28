@@ -371,7 +371,7 @@ function appendToDashboard(prompt, reaction) {
 	dashboardCount++;
 
 	dashboardContent += '<div class="item">'
-						+ '<i class="large blue '
+						+ '<i class="large '
 						+ platformIconName(prompt.platform)
 						+ ' middle aligned icon"></i>'
 					    + '<div class="content">'
